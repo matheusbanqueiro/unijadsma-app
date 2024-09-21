@@ -17,22 +17,23 @@ import {
 import AdministratorsCreateForm from "@/components/user/create-administrators-form";
 import { useCallback, useEffect, useState } from "react";
 import type { AdministratorsInterface } from "@/interfaces/administrators-interface";
+import { Avatar } from "@/components/ui/avatar";
 
 const RegisterUser = () => {
   const { user, adminList } = useAuth();
-  const [admin, setAdmin] = useState<AdministratorsInterface>();
+  const [admin, setAdmin] = useState<AdministratorsInterface[]>([]);
 
   const tabs = [
     {
       name: "Perfil",
-      href: "/configuracoes/perfil",
+      href: "/dashboard/configuracoes/perfil",
       icon: User,
       current: false,
       coming: false,
     },
     {
       name: "Administradores",
-      href: "/configuracoes/administradores",
+      href: "/dashboard/configuracoes/administradores",
       icon: MapPinIcon,
       current: false,
       coming: false,
@@ -41,18 +42,20 @@ const RegisterUser = () => {
 
   const handleGetAdmin = useCallback(async () => {
     if (!user) return;
+
     const response = await adminList();
 
     if (response) {
-      setAdmin(response);
+      setAdmin(Array.isArray(response) ? response : [response]);
     }
-  }, [user, adminList, setAdmin]);
+  }, [user, adminList]);
 
   useEffect(() => {
     handleGetAdmin();
   }, [handleGetAdmin]);
 
-  if (!user || !admin) return <Loading />
+
+  if (!user) return <Loading />
 
   return (
     <AdminTheme>
@@ -61,20 +64,31 @@ const RegisterUser = () => {
       <Table className="mt-8">
         <TableHeader>
           <TableRow>
+            <TableHead>Avatar</TableHead>
             <TableHead>Nome</TableHead>
             <TableHead>E-mail</TableHead>
+            <TableHead>Telefone</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">Name</TableCell>
-            <TableCell>E-mail</TableCell>
+          {admin.map((administrator) => (
+            <TableRow key={administrator.uuid}>
+            <TableCell className="">
+              <Avatar className="bg-grenadier-600 text-white justify-center items-center">
+                {administrator.avatar}
+              </Avatar>
+            </TableCell>
+            <TableCell>{administrator.name}</TableCell>
+            <TableCell>{administrator.email}</TableCell>
+            <TableCell>{administrator.phone}</TableCell>
             <TableCell className="text-right">Visualizar</TableCell>
           </TableRow>
+          
+          ))}
         </TableBody>
       </Table>
-
     </AdminTheme>
   );
 }
+
 export default RegisterUser;

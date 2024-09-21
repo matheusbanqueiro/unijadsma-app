@@ -96,7 +96,7 @@ const Menu = ({ showMenu = false }) => {
           </div>
         </div>
 
-        <Link href="/configuracoes/perfil" className="flex flex-col gap-5 pl-4 pr-8 mt-20 hover:opacity-80">
+        <Link href="/dashboard/configuracoes/perfil" className="flex flex-col gap-5 pl-4 pr-8 mt-20 hover:opacity-80">
           <div className="flex gap-2 items-center">
             <Avatar>
               <AvatarFallback className="text-white">{user.avatar}</AvatarFallback>

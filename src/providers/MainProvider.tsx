@@ -12,7 +12,7 @@ const MainProvider = ({ children }: MainProviderProps) => {
   return (
     <>
       <NextTopLoader
-        color="#e27c00"
+        color="#c2d9f5"
         initialPosition={0.08}
         crawlSpeed={200}
         height={2}

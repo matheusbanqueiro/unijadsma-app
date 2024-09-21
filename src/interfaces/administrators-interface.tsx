@@ -1,6 +1,9 @@
 export interface AdministratorsInterface {
-  id:number;
+  uuid:number;
+  avatar?: string; 
   name: string;
   email: string;
-  password: number;
+  phone: string;
+  created_at: string;
+  updated_at: string;
 }

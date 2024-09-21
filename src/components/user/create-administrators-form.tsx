@@ -4,15 +4,17 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogClose,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from "@/components/ui/dialog"
 import { Plus } from 'lucide-react';
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterAdministratorsSchema, type RegisterAdministratorsSchemaFormProps } from "@/validations/user-validate";
+import { registerAdministratorsSchema, type RegisterAdministratorsSchemaFormProps } from "@/validations/user-validate";
 import { ValidateInput } from "../validate-input";
 import { useAuth } from "@/contexts/useAuth";
 
@@ -28,10 +30,11 @@ const AdministratorsCreateForm = () => {
   } = useForm<RegisterAdministratorsSchemaFormProps>({
     criteriaMode: "all",
     mode: "all",
-    resolver: zodResolver(RegisterAdministratorsSchema),
+    resolver: zodResolver(registerAdministratorsSchema),
     defaultValues: {
       name: "",
       email: "",
+      phone: "",
       password: ""
     },
   });
@@ -41,11 +44,10 @@ const AdministratorsCreateForm = () => {
   };
 
   return (
-    <div>
-      
+    <div className="flex justify-end">
       <Dialog>
-        <DialogTrigger >
-          <Button className="gap-2">
+        <DialogTrigger>
+          <Button className="gap-2 rounded-full">
             <Plus className="w-5 h-5" />
             <p>Adicionar Novo</p>
           </Button>
@@ -67,19 +69,31 @@ const AdministratorsCreateForm = () => {
             className="w-full"
           />
           <ValidateInput
+            {...register("phone")}
+            errorMessage={errors.phone?.message}
+            placeholder="Digite o telefone"
+            maxLength={11}
+            className="w-full"
+          />
+          <ValidateInput
             {...register("password")}
             type="password"
             errorMessage={errors.password?.message}
             placeholder="Digite a senha"
             className="w-full"
           />
-          <Button
-            variant="default"
-            className="w-full py-2 px-4 font-bold mt-4 bg-grenadier-600 text-white rounded hover:bg-grenadier-700 focus:outline-none focus:ring-2 focus:ring-grenadier-500"
-            onClick={handleSubmit(handleRegisteradministrators)}
-          >
-            Finalizar
-          </Button>
+
+          <DialogFooter className="sm:justify-start">
+            <DialogClose asChild>
+              <Button
+                variant="default"
+                className=""
+                onClick={handleSubmit(handleRegisteradministrators)}
+              >
+                Finalizar
+              </Button>
+            </DialogClose>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 

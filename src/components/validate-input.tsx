@@ -25,7 +25,7 @@ const ValidateInput = React.forwardRef<HTMLInputElement, ValidateInputProps>(
           disabled={disabled}
           type={inputType}
           className={cn(
-            `flex h-10 w-full rounded-md bg-slate-50 ring-1 ring-grenadier-600 ring-offset-0 focus:outline-none focus:ring-2 ${
+            `flex h-10 w-full rounded-full bg-slate-50 ring-1 ring-grenadier-600 ring-offset-0 focus:outline-none focus:ring-2 ${
               errorMessage ? "ring-red-500/80" : "focus:ring-grenadier-600/80"
             }  px-3 py-2 text-sm text-brand-primary file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-400  disabled:cursor-not-allowed disabled:opacity-50`,
             className
